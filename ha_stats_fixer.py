@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Home Assistant Statistics Fixer (SQLite)
+# Home Assistant Statistics Fixer (SQLite) v10
 # - monthly Start/End window, choose columns: sum/state/both
 # - NEW: Preview & Diagnose render ONLY the columns selected in "Columns to adjust"
 #        (if "both", they render both; else only the chosen one)
