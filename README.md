@@ -1,9 +1,12 @@
 # 🧰 Home Assistant Statistics Fixer (SQLite)
 
+# Contents
+- [1. Deutsch](#1-Deutsch)
+- [2. English](#2-English)
 > 🇩🇪 Deutsch · 🇬🇧 English below
 
 ---
-
+# 1. Deutsch
 ## 🇩🇪 Übersicht
 
 **HA Statistics Fixer** ist ein Python-Tool mit GUI zur komfortablen Bearbeitung von Statistikdaten in **Home Assistant** (z. B. Energie- oder Zählerdaten).  
@@ -67,31 +70,29 @@ python ha_stats_fixer.py
 ---
 
 ## 🧾 Beispiel
+Innerhalb Home Assistant findet man zB im Verlauf heraus, dass die Variable sensor.pv_sg_meter_monthly unplausible Daten hat (meistens ein Sprung, zB durch Kommunikationsprobleme Modbus verursacht). Dadurch kann man meist Datum und Uhrzeit eingrenzen. Alternativ kann man auch Entwicklerwerkzeuge und Statistik nutzen um Ausreißer zu identifizieren.
+- Eingabe der betroffenen Entität und des Datums/ Uhrzeit (1)
+- Preview nutzen um die genaue Uhrzeit des Sprung (Offset von 3144) zu identifizieren (2)
+- Diagnose kann optional auch genutzt werden um mehr Datenbankeinträge anzuzeigen (vor und nach dem Zeitstempel) (3)
+- Bei 20Uhr (4) sieht man, dass die Daten zu diesem Zeitpunkt noch ok sind, der Sprung auf 3563kWh findet eine Stunde später statt (5)
+- Setzt man in (1) 21Uhr, dann sieht man in (6) und (7) das ab diesem Zeitpunkt alle Daten einen Sprung haben 
+- Da es sich bei der Entität um ein Utility-Meter/ Verbrauchszähler handelt müssen alle Daten in `state` (visualisierungsdaten zB für Statistikdiagramm) und `sum` (rohdaten) bis nächsten Monatsanfang in `Local END` (1. Oktober um 0Uhr) korrigiert werden. Tip: Über HA und dann Verlauf kann man gut erkennen, für welchen Zeitraum die Daten korrigiert werden müssen.
 
-```yaml
-chart_type: bar
-period: month
-type: statistics-graph
-entities:
-  - sensor.pv_sg_meter_monthly
-stat_types:
-  - state
-```
-
-Korrektur:
-- Start: `2025-09-01 00:00`
-- Ende: `2025-10-01 00:00`
-- Columns: `state`
-- Offset: `-3000`
+<img src="screenshots/HA_Stats_Fixer_Instructions.png" width="600">
 
 → Nach Neustart zeigt das Diagramm den korrekten September-Wert.
 
 ---
 
 ## 📸 Screenshots
-*(Optional – hier eigene Bilder hinzufügen)*  
-- **Hauptfenster:** ![GUI Preview](./screenshots/gui_main.png)  
-- **Diagnose-Ansicht:** ![Diagnose Output](./screenshots/diagnose.png)
+
+Home Asisstant's Statistics Tool Preview Output (gives quick overview if all atributes are found and how many entries are found)
+
+<img src="screenshots/HA_Stats_Fixer_Preview.png" width="600">
+
+Home Asisstant's Statistics Tool Details Output (allows betetr understanding of data due to detailed database entries output)
+
+<img src="screenshots/HA_Stats_Fixer_Preview.png" width="600">
 
 ---
 
@@ -102,7 +103,7 @@ Korrektur:
 ---
 
 ---
-
+# 2. English
 # 🇬🇧 Overview
 
 **HA Statistics Fixer** is a Python GUI tool for editing **Home Assistant** statistical data (e.g. energy or meter readings) directly in the SQLite database.
@@ -171,21 +172,15 @@ python ha_stats_fixer.py
 
 ## 🧾 Example
 
-```yaml
-chart_type: bar
-period: month
-type: statistics-graph
-entities:
-  - sensor.pv_sg_meter_monthly
-stat_types:
-  - state
-```
+Within Home Assistant, you can find out via Recorder, for example, that the entity sensor.pv_sg_meter_monthly has implausible data (usually a jump, e.g., caused by Modbus communication problems). This usually allows you to narrow down the date and time. Alternatively, you can also use developer tools and statistics to identify outliers.
+- Enter the affected entity and the date/time (1)
+- Use the preview to identify the exact time of the jump (offset of 3144) (2)
+- Diagnostics can also be used to display more database entries (before and after the timestamp) (3)
+- At 8 p.m. (4), you can see that the data is still OK at this point in time; the jump to 3563kWh takes place an hour later (5)
+- If you set (1) to 9 p.m., you can see in (6) and (7) that all data has a jump from this point in time 
+- Since the entity is a utility meter/consumption meter, all data in `state` (visualization data, e.g., for statistical diagrams) and `sum` (raw data) must be corrected in `Local END` (October 1 at midnight) by the beginning of the next month. Tip: You can easily see the period for which the data needs to be corrected via HA and then History.
 
-To fix the September jump:
-- Start: `2025-09-01 00:00`
-- End: `2025-10-01 00:00`
-- Columns: `state`
-- Offset: `-3000`
+<img src="screenshots/HA_Stats_Fixer_Instructions.png" width="600">
 
 After restarting HA, the September bar will display correctly.
 
