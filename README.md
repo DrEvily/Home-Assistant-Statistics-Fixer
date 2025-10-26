@@ -95,6 +95,14 @@ Home Asisstant's Statistics Tool Details Output (allows betetr understanding of 
 <img src="screenshots/HA_Stats_Fixer_Preview.png" width="600">
 
 ---
+## Compile
+
+```
+pip install pyinstaller
+
+pyinstaller --onefile --windowed ha_stats_fixer.py
+```
+
 
 ## 🧑‍💻 Autor & Lizenz
 **Autor:** DrEvily  
@@ -186,7 +194,14 @@ After restarting HA, the September bar will display correctly.
 
 
 ---
+## Compile
 
+```
+pip install pyinstaller
+
+pyinstaller --onefile --windowed ha_stats_fixer.py
+```
+---
 ## 🧑‍💻 Author & License
 **Author:** DrEvily
 **License:** MIT  
